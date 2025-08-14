@@ -1,0 +1,238 @@
+.project-page {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color:rgba(255, 255, 255, 0.1) ;
+  border-radius: 8px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.project-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 1rem;
+}
+
+.project-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.project-meta {
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.project-user {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.project-description {
+  color: #ffffff;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.project-documents {
+  margin-top: 2rem;
+}
+.project-linked-documents{
+  color: #fff;
+  text-align: left;
+  list-style-position: inside;
+
+  
+
+
+}
+
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.project-documents h2 {
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin: 0;
+}
+input[type="file"]{
+
+  padding: 0.4rem 0.7rem;
+
+}
+.add-document-button{
+
+  padding: 0.4rem 2rem;
+  padding-top: 0.6rem ;
+  padding-bottom: 0.5rem;
+ background-color: rgb(0, 154, 191);
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: auto;
+  max-width: 200px;   
+ 
+
+}
+.upload-form select{
+
+    padding: 0.5rem 1rem;
+
+}
+.upload-form{
+  display: inline-flex;
+  gap:20px;
+
+}
+
+.upload-form select,
+input[type="file"]{
+  background-color: rgb(0, 154, 191);
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: auto;
+  max-width: 200px;  
+  margin-top: 0.5rem;
+
+}
+
+.upload-form select:hover,
+input[type="file"]:hover,
+.add-document-button:hover {
+  background-color: #2980b9;
+}
+
+.document-list {
+  list-style: none;
+  padding: 0;
+}
+
+.document-item {
+  background-color: #f9f9f9;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+
+.Caf-section {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ffffff;
+  text-align: center;
+}
+.Caf-section p,
+.Caf-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.generate-Caf-button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: rgb(0, 154, 191);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;           
+  min-width: 150px;      
+  display: inline-block;
+}
+
+.generate-Caf-button:hover {
+  background-color: #2980b9;
+}
+
+
+.project-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.25s ease;
+  min-width: 110px;   
+}
+
+.btn-delete {
+  background-color: rgb(0, 154, 191);
+  color: white;
+}
+
+
+.btn-modify {
+  background-color: rgb(0, 154, 191);
+  color: white;
+}
+
+
+.btn-download {
+   background-color: rgb(0, 154, 191);
+  color: white;
+}
+.download,
+.delete{
+  font-size: 1.2rem;
+  width: 5rem;
+  padding:0rem;
+  background-color:rgb(0, 154, 191); 
+  margin-left: 20px;
+}
+
+
+
+
+
+.download:hover,
+.delete:hover,
+.btn-delete:hover,
+.btn-modify:hover,
+.btn-download:hover {
+  background-color: #2980b9;
+}
+
+.back-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

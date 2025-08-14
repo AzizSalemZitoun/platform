@@ -1,0 +1,161 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform:translateY(30px) ;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.header-content {
+  flex: 1 1 500px;
+  text-align: center;
+  animation: fadeInUp 0.8s ease forwards;
+  padding: 2rem 1rem;
+}
+.form-container {
+    background: rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+  padding: 20px;
+  margin-top: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+.project-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.project-form input,
+.project-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.form-buttons {
+  display: inline-flex;
+  gap: 20px;
+
+}
+
+.submit-button,
+.cancel-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+input[type='text']{
+background-color: white;
+text-align: center;
+
+}
+
+.submit-button {
+  background-color: rgb(0, 154, 191);
+  color: white;
+}
+
+.cancel-button {
+  background-color: rgb(0, 85, 111);
+  color: white;
+}
+
+.header-content h5 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #fdfdfd;
+  font-weight: 800;
+  text-align: center;
+}
+
+.header-content p {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.cards-section {
+  max-width: 1000px;
+  margin: 0 auto 4rem;
+  padding: 0 1.5rem;
+  text-align: center;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.cards-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #fdfdfd;
+  font-weight: 800;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+
+.card {
+  background: rgba(209, 213, 219, 0.05);
+  padding: 1.5rem 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  color: #fdfdfd;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.manage-button,
+.add-button {
+ background-color: #ffffff;
+  font-weight: 700;
+    color: rgb(0, 85, 111);
+  border: none;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  cursor: pointer;
+  width: auto;
+
+}
+
+
+
+.manage-button:hover,
+.add-button:hover {
+ background-color: rgb(0, 154, 191);
+  color: rgb(255, 255, 255);
+}
+
+.add-button-container {
+  margin-top: 2rem;
+}
+
+
+.card:hover
+{
+  box-shadow: 0 12px 40px rgba(13, 148, 136, 0.15);
+  transform: translateY(-6px);
+  outline: none;
+  cursor: pointer;
+}

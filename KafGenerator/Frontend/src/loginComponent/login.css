@@ -1,0 +1,236 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.login-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(40, 40, 40, 0.4);
+  max-width: 400px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  user-select: none;
+  color: #fdfdfd;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  user-select: none;
+  color: #fdfdfd;
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: rgba(209, 213, 219, 0.15);
+  color: #374151;
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+input:focus {
+  box-shadow: 0 0 8px 3px #94a3b8;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #1f2937;
+}
+
+button {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #3a414b;
+  box-shadow: 0 6px 15px rgba(100, 116, 139, 0.5);
+  color: #e0e7ff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background-color: #475569;
+  box-shadow: 0 8px 20px rgba(71, 85, 105, 0.7);
+}
+
+.signup-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-align: center;
+  user-select: none;
+}
+
+.signup-link {
+  color: #fdfdfd;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.signup-link:hover {
+  color: #e0e7ff;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+.login-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(40, 40, 40, 0.4);
+  max-width: 400px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  user-select: none;
+  color: #fdfdfd;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  user-select: none;
+  color: #fdfdfd;
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: rgba(209, 213, 219, 0.15);
+  color: #374151;
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+input:focus {
+  box-shadow: 0 0 8px 3px #94a3b8;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #1f2937;
+}
+
+button {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: rgb(0, 85, 111);
+  box-shadow: 0 6px 15px rgba(100, 116, 139, 0.5);
+  color: #ffffff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+   background-color: rgb(0, 154, 191);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 8px 20px rgba(71, 85, 105, 0.7);
+}
+
+.signup-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-align: center;
+  user-select: none;
+}
+
+.signup-link {
+  color: #fdfdfd;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.signup-link:hover {
+  color: #e0e7ff;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

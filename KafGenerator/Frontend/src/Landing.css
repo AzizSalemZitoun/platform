@@ -1,0 +1,176 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg,rgb(0, 85, 111), rgb(0, 110, 150), rgb(0, 154, 191));
+  color: #ff0000;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.landing-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 3rem auto 4rem;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+.landing-header,
+.features-section {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.header-content {
+  flex: 1 1 500px;
+}
+
+.header-content h1 {
+  font-size: 2.73rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-weight: 800;
+  text-align: left;
+}
+.login-link,
+.header-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  line-height: 1.5;
+  text-align: left;
+  
+}
+
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #ffffff;
+  color: rgb(0, 85, 111);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+ background-color: rgb(0, 154, 191);
+  color: rgb(255, 255, 255);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: rgb(0, 85, 111);
+  border: 2px solid #ffffff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background-color: rgb(0, 154, 191);
+  color: rgb(255, 255, 255);}
+
+.header-image {
+  flex: 1 1 400px;
+  text-align: center;
+}
+
+.header-image img {
+  max-width: 100%;
+  border-radius: 70px;
+  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.15);
+  transition: transform 0.5s ease;
+}
+
+.header-image img:hover,
+.header-image img:focus-visible {
+  transform: scale(1.05);
+  outline: none;
+}
+
+.features-section {
+  max-width: 1000px;
+  margin: 0 auto 4rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  font-weight: 200;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: rgba(209, 213, 219, 0.05);
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.feature-card:hover,
+.feature-card:focus-within {
+  box-shadow: 0 12px 40px rgba(13, 148, 136, 0.15);
+  transform: translateY(-6px);
+  outline: none;
+}
+
+.feature-card h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+
