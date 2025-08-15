@@ -17,5 +17,9 @@ public interface IProjectService {
 
     Project setProjectToUser(Long id, Long idp);
 
-    String generateReport(Project project);
+    //String generateReport(Project project);
+
+    String generateReport(Long id);
+
+    //String generateReport(String prompt);
 }

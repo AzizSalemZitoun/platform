@@ -11,7 +11,10 @@ public interface IDocumentService {
 
 
 
-    public Document addDocument(String name, Type type, MultipartFile file, Long projectId)throws IOException;
+    //public Document addDocument(String name, Type type, MultipartFile file, Long projectId)throws IOException;
+
+    Document addDocument(String name, Type type, String content, Long projectId);
+
     void deleteDocument(Long id);
 
     List<DocumentDTO> getAllDocuments();

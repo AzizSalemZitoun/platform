@@ -11,14 +11,14 @@ public class DocumentDTO {
     private String name;
     @Enumerated(EnumType.STRING)
     private Type type;
-    private byte[] content;
+    private String content;
     private Project project;
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

@@ -7,9 +7,7 @@ import com.example.kafgenerator.Repositories.DocumentRepository;
 import com.example.kafgenerator.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -22,15 +20,15 @@ public class DocumentService implements IDocumentService {
     DtoMapper dtoMapper;
 
 
-
-    public Document addDocument(String name, Type type, MultipartFile file, Long projectId) throws IOException {
+@Override
+public Document addDocument(String name, Type type, String content, Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
         Document document = new Document();
         document.setName(name);
         document.setType(type);
-        document.setContent(file.getBytes());
+        document.setContent(content); // Now we set the string content directly
         document.setProject(project);
 
         return documentRepository.save(document);

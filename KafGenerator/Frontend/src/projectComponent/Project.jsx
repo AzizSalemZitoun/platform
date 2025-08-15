@@ -9,7 +9,9 @@ import {
 } from '../api/api';
 import './Project.css';
 
-  
+// It is generally not good practice to use window.confirm() or alert()
+// in a React application. You may want to replace these with a custom
+// modal or confirmation dialog component for a better user experience.
 
 export default function Project() {
   const { id } = useParams();
@@ -19,7 +21,7 @@ export default function Project() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [docType, setDocType] = useState('pdf');
+  const [docType, setDocType] = useState('');
   const [documentName, setDocumentName] = useState('');
 
   useEffect(() => {
@@ -50,24 +52,46 @@ export default function Project() {
   }, [id]);
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-    setDocumentName(e.target.files[0]?.name || '');
-    setDocType(e.files[0]?.docType)
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setDocumentName(file.name || '');
+
+      // Determine the document type based on the file's MIME type
+      switch (file.type) {
+        case 'application/pdf':
+          setDocType('pdf');
+          break;
+        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+          setDocType('docx');
+          break;
+        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+          setDocType('excel');
+          break;
+        case 'image/jpeg': // Note: your backend logic specified 'image/jpg' but 'image/jpeg' is more common
+        case 'image/jpg':
+          setDocType('excel'); // The backend is expecting 'excel' for images, as per your code
+          break;
+        default:
+          setDocType('');
+          alert('Unsupported file type. Please select a PDF, DOCX, XLSX, or JPG file.');
+          setSelectedFile(null); // Clear selected file if type is unsupported
+      }
+    }
   };
 
   const handleAddDocument = async () => {
     if (!selectedFile || !docType || !documentName) {
-      alert('Please select a file, type, and enter a document name.');
+      alert('Please select a file, and a document name.');
       return;
     }
-    try{
-  await addDocument(selectedFile, documentName, docType, id);
-    await fetchDocuments()}
-    catch (e){
+    try {
+      await addDocument(selectedFile, documentName, docType, id);
+      await fetchDocuments();
+    } catch (e) {
       alert('Unsupported media type');
       return;
     }
-
   };
 
   const handleDeleteProject = async () => {
@@ -83,17 +107,15 @@ export default function Project() {
       await fetchDocuments();
     }
   };
- 
 
   if (loading) return <div className="project-page">Loading...</div>;
   if (error) return <div className="project-page">Error: {error}</div>;
   if (!project) return <div className="project-page">No project found</div>;
 
   return (
-    
     <div className="project-page">
       <header className="project-header">
-       <Link to="/dashboard" className="back-link">
+        <Link to="/dashboard" className="back-link">
           ← Back to Dashboard
         </Link><br></br>
         <h1>{project.name}</h1>
@@ -109,7 +131,6 @@ export default function Project() {
         <div className="documents-header">
           <h2>Documents</h2>
           <div className="upload-form">
-           
             <input type="file" onChange={handleFileChange} />
             <button className="add-document-button" onClick={handleAddDocument}>
               Save
@@ -122,7 +143,7 @@ export default function Project() {
         <ul>
           {documents.length > 0 ? (
             documents.map((docs) => (
-              <li  key={docs.id}>
+              <li key={docs.id}>
                 📄 {docs.name}
                 <button className="delete" onClick={() => handleDeleteDocument(docs.id)}>🗑️</button>
               </li>
@@ -144,7 +165,6 @@ export default function Project() {
           <button className="btn btn-delete" onClick={handleDeleteProject}>Delete</button>
           <button className="btn btn-download">Download report</button>
         </div>
-       
       </footer>
     </div>
   );

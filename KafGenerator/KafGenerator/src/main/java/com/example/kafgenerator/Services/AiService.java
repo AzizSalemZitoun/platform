@@ -1,5 +1,6 @@
 package com.example.kafgenerator.Services;
 
+import com.google.genai.Client;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 public class AiService {
 
     private ChatClient chatClient;
-
     public AiService(ChatClient.Builder builder) {
 
      chatClient = builder.build();

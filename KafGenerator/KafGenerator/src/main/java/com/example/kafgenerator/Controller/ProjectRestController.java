@@ -35,9 +35,9 @@ public class ProjectRestController {
     public void deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
     }
-@PostMapping("/generate")
-    public String generateProject(@RequestBody Project project){
-   return projectService.generateReport(project);
+@PostMapping("/generate/{id}")
+    public String generateProject(@PathVariable Long id){
+   return projectService.generateReport(id);
 
 
 }

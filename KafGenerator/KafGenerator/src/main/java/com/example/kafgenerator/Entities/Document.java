@@ -13,15 +13,15 @@ private String name;
 private Type type;
 @Lob
 @Basic(fetch = FetchType.LAZY)
-private byte[] content;
+private String content;
 @ManyToOne()
 private Project project;
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
