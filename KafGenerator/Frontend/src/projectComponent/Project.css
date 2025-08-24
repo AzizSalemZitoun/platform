@@ -99,7 +99,7 @@ input[type="file"]{
 
 .upload-form select,
 input[type="file"]{
-  background-color: rgb(0, 154, 191);
+  background-color: #009abf;
   border: none;
   color: white;
   font-weight: 600;
@@ -146,8 +146,9 @@ input[type="file"]:hover,
   margin-bottom: 0.5rem;
   color: #ffffff;
 }
-
+.produit-dropdown,
 .generate-Caf-button {
+  margin-left: 20px;
   margin-top: 0.5rem;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -218,13 +219,30 @@ input[type="file"]:hover,
 
 
 
-
+.produit-dropdown:hover,
 .download:hover,
 .delete:hover,
 .btn-delete:hover,
 .btn-modify:hover,
 .btn-download:hover {
   background-color: #2980b9;
+}
+.report-container {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #009abf;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-height: 400px;   
+  overflow-y: auto;    
+}
+
+.report-content {
+  white-space: pre-wrap; 
+  word-wrap: break-word; 
+  font-family: "Courier New", monospace;
+  font-size: 0.95rem;
+  color: #ffffff;
 }
 
 .back-link {

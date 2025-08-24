@@ -26,6 +26,8 @@ export default function Dashboard() {
     name: '',
     description: '',
     createdAt: getFrenchDate(),
+    clientType: 'Company', 
+    individualType: '', 
   });
 
   useEffect(() => {
@@ -47,19 +49,43 @@ export default function Dashboard() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => {
+      const newState = { ...prev, [name]: value };
+      if (name === 'clientType' && value === 'Company') {
+        newState.individualType = '';
+      }
+      return newState;
+    });
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const created = await createProject(formData);
+      const projectData = {
+        name: formData.name,
+        description: formData.description,
+        createdAt: formData.createdAt,
+        clientType: formData.clientType,
+      };
+
+      if (formData.clientType === 'Individual') {
+        projectData.individualType = formData.individualType;
+      } else {
+       
+        projectData.individualType = null;
+      }
+
+      const created = await createProject(projectData);
       await assignProjectToUser(userId, created.id);
       setProjects((prev) => [...prev, created]);
-      setFormData({ name: '', description: '', createdAt: getFrenchDate() });
+      
+      setFormData({
+        name: '',
+        description: '',
+        createdAt: getFrenchDate(),
+        clientType: 'Company',
+        individualType: '',
+      });
       setShowForm(false);
     } catch (error) {
       console.error('Error creating project:', error);
@@ -81,8 +107,7 @@ export default function Dashboard() {
               <p>{project.description}</p>
               <p><strong>Created:</strong> {project.createdAt}</p>
               <br></br>
-             <Link to={`/project/${project.id}`} className="manage-button">Manage</Link>
-
+              <Link to={`/project/${project.id}`} className="manage-button">Manage</Link>
             </div>
           ))}
         </div>
@@ -93,7 +118,7 @@ export default function Dashboard() {
         </div>
         {showForm && (
           <div className="form-container">
-            <h3 type="text">Create New Project</h3>
+            <h3>Create New Project</h3>
             <form onSubmit={handleFormSubmit} className="project-form">
               <label>
                 Name:
@@ -109,12 +134,12 @@ export default function Dashboard() {
                 Description:
                 <textarea
                   name="description"
-                  type="text"
                   value={formData.description}
                   onChange={handleInputChange}
                   required
                 />
               </label>
+              
               <label>
                 Created At:
                 <input
@@ -125,6 +150,36 @@ export default function Dashboard() {
                   required
                 />
               </label>
+              <label>
+                Client Type : 
+                <select
+                  className="clientType"
+                  name="clientType"
+                  value={formData.clientType}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="Company">Company</option>
+                  <option value="Individual">Individual</option>
+                </select>
+              </label>
+              {formData.clientType === 'Individual' && (
+                <label>
+                  Individual Type:
+                  <select
+                  name="individualType"
+                    className="individualType"
+                    value={formData.individualType}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select a type</option>
+                    <option value="SalaryMan">SalaryMan</option>
+                    <option value="Retired">Retired</option>
+                    <option value="Professional">Professional</option>
+                  </select>
+                </label>
+              )}
               <div className="form-buttons">
                 <button type="submit" className="manage-button">
                   Create

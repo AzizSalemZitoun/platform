@@ -150,4 +150,32 @@ export async function deleteDocument(documentId) {
     throw new Error(errorText || 'Failed to delete document');
   }
 }
+export async function generateReport(id, idprod) {
+  const response = await fetch(
+    `${BASE_URL}/project/generate?id=${id}&idprod=${idprod}`,
+    {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    }
+  );
 
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || 'Failed to generate report');
+  }
+
+  return await response.text(); 
+}
+
+export async function getAllProduits() {
+  const response = await fetch(`${BASE_URL}/produit/get/all`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch produits');
+  }
+
+  return await response.json(); 
+}

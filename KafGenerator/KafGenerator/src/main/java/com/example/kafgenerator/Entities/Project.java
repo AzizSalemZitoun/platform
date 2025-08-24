@@ -11,6 +11,11 @@ public class Project {
 private Long id;
     @NotBlank
 private String name;
+    @Enumerated(EnumType.STRING)
+    @NotBlank
+    private ClientType clientType;
+    @Enumerated(EnumType.STRING)
+    private IndividualType individualType;
     @NotBlank
     private String description;
 private String createdAt;
@@ -67,4 +72,19 @@ return createdAt;
 public void setCreatedAt(String createdAt) {
 this.createdAt = createdAt;
 }
+    public ClientType getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(ClientType clientType) {
+        this.clientType = clientType;
+    }
+
+    public IndividualType getIndividualType() {
+        return individualType;
+    }
+
+    public void setIndividualType(IndividualType individualType) {
+        this.individualType = individualType;
+    }
 }

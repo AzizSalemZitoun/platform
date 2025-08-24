@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/project")
 public class ProjectRestController {
@@ -13,13 +15,15 @@ public class ProjectRestController {
     ProjectRepository projectRepository;
     @Autowired
     IProjectService projectService;
+
     @PostMapping("/add")
     public ResponseEntity<Project> addProject(@RequestBody Project project) {
         Project saved = projectRepository.save(project);
         return ResponseEntity.ok(saved);
     }
+
     @PutMapping("/update/{id}")
-    public Project updateProject(@PathVariable Long id,@RequestBody Project project) {
+    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
         return projectService.updateProject(id, project);
     }
 
@@ -27,18 +31,33 @@ public class ProjectRestController {
     public Project getProject(@PathVariable Long id) {
         return projectService.getProject(id);
     }
+
     @PostMapping("/setproject")
-    public Project setProject(@RequestParam Long id,@RequestParam Long idp) {
-      return projectService.setProjectToUser(id,idp);
+    public Project setProject(@RequestParam Long id, @RequestParam Long idp) {
+        return projectService.setProjectToUser(id, idp);
     }
+
     @DeleteMapping("/delete/{id}")
     public void deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
     }
-@PostMapping("/generate/{id}")
-    public String generateProject(@PathVariable Long id){
-   return projectService.generateReport(id);
 
+     @PostMapping("/generate")
+    public String generateProject(@RequestParam Long id, @RequestParam Long idprod) {
+        try {
+            return projectService.generateReport(id, idprod);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error generating report: " + e.getMessage();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /*
+      @PostMapping("/generate")
+        public String generateProject(@RequestParam Long id, @RequestParam Long idprod) {
 
-}
+                return projectService.generateReport(id, idprod);
+            }*/
+
 }

@@ -1,20 +1,26 @@
 package com.example.kafgenerator.Services;
 import com.example.kafgenerator.DTO.ProjectDTO;
 import com.example.kafgenerator.Entities.Document;
+import com.example.kafgenerator.Entities.Produit;
 import com.example.kafgenerator.Entities.Project;
 import com.example.kafgenerator.Entities.User;
+import com.example.kafgenerator.Repositories.ProduitRepository;
 import com.example.kafgenerator.Repositories.ProjectRepository;
 import com.example.kafgenerator.Repositories.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 
 public class ProjectService implements IProjectService {
+    @Autowired
+    ProduitRepository produitRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -24,7 +30,7 @@ public class ProjectService implements IProjectService {
     @Autowired
     private AiService aiService;
     @Autowired
-    GenerateTextFromTextInput generateTextFromTextInput;
+    GeminiAiService geminiAiService;
 
     @Override
     public ProjectDTO addProject(ProjectDTO projectDTO) {
@@ -78,8 +84,7 @@ public class ProjectService implements IProjectService {
         return projectDTOS;
     }
 
-
-    //setproject method twali n3ayetlha automatically kol mauser yzid project
+    //setproject method twali n3ayetlha automatically kol ma user yzid project
 
     @Override
     public Project setProjectToUser(Long id, Long idp) {
@@ -96,60 +101,116 @@ public class ProjectService implements IProjectService {
         return null;
     }
 
-
-    public String generateReport(Long id) {
-        Project project = projectRepository.findById(id).get();
+    @Override
+    public String generateReport(Long projectId, Long produitId) throws IOException, InterruptedException {
+        Project project = projectRepository.findById(projectId).orElseThrow();
+        Produit produit = produitRepository.findById(produitId).orElseThrow();
         List<Document> documents = project.getDocuments();
 
-        // Concatenate all document content into a single string
+        // Concatenate all documents
         String allDocumentsContent = documents.stream()
                 .map(Document::getContent)
-                .collect(Collectors.joining("\n\n---\n\n")); // Use a clear separator
+                .collect(Collectors.joining("\n\n---\n\n"));
 
+        // Build JSON input for Python
+        Map<String, Object> inputData = Map.of(
+                "documents", allDocumentsContent,
+                "conditions", produit.getConditions(),
+                "client_name", project.getName(),
+                "project_name", project.getDescription()
+        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonInput = objectMapper.writeValueAsString(inputData);
 
-        String prompt2 ="""
-You are an expert compliance analyst for a financial institution. Your task is to evaluate a client based on the provided conditions and documents. Provide a comprehensive report that first gives a brief overview of the findings, then validates each condition with a PASS/FAIL status, citing specific proof from the documents. Finally, conclude with a final ACCEPT or REJECT decision.
+        // Load Python script from same folder
+        ClassLoader classLoader = getClass().getClassLoader();
+        File scriptFile = new File(classLoader.getResource("TEST.py").getFile());
+
+        ProcessBuilder pb = new ProcessBuilder("py", "-3.12", scriptFile.getAbsolutePath());
+
+        pb.redirectErrorStream(true); // merge stderr into stdout
+        Process process = pb.start();
+
+        // Write JSON input and close to signal EOF
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
+            writer.write(jsonInput);
+            writer.flush();
+            writer.close(); // important to avoid Python hanging on stdin.read()
+        }
+
+        // Read Python output
+        StringBuilder output = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+        }
+
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new RuntimeException("Python script exited with code " + exitCode + "\nOutput:\n" + output.toString());
+        }
+
+        return output.toString().trim();
+    }
+
+/*
+    public String generateReport(Long id, Long idprod) {
+        // Fetch project and product
+        Project project = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+        Produit produit = produitRepository.findById(idprod).orElseThrow(() -> new RuntimeException("Produit not found"));
+        List<Document> documents = project.getDocuments();
+
+        // Concatenate all documents with a clear separator
+        String allDocumentsContent = documents.stream()
+                .map(Document::getContent)
+                .collect(Collectors.joining("\n\n---\n\n"));
+
+        // Get current date for comparisons
+        String today = java.time.LocalDate.now().toString(); // Format: YYYY-MM-DD
+
+        // Build the prompt
+        String prompt2 = """
+You are an expert compliance analyst for a financial institution. Evaluate the client strictly based on the provided conditions and documents.
 
 **Acceptance Conditions:**
-- **Condition 1: Financial Solvency:** The company must have a positive Net Income for the most recent fiscal year.
-- **Condition 2: Corporate Structure:** All financial statements must be signed off by a certified auditor from an independent third-party firm.
-- **Condition 3: Related-Party Disclosures:** The company's financial statements must clearly disclose any related-party transactions over $50,000.
+%s
 
 **Client Information:**
 Client Name: %s
 Project Description: %s
+Client Type: %s
+Client Individual Type (if applicable): %s
+Current Date: %s
 
 **Documents Content:**
 %s
 
-**Report Format:**
-**Compliance Report for [Client Name]**
-
-**1. Executive Summary:**
-[A brief, high-level summary of the analysis findings and overall recommendation.]
-
-**2. Condition-Based Analysis:**
-**Condition 1: Financial Solvency**
-[PASS/FAIL] - [Brief explanation and proof from the document, e.g., "The Income Statement shows a Net Income of $320,000 for 2025, which is a positive value."].
-
-**Condition 2: Corporate Structure**
-[PASS/FAIL] - [Brief explanation and proof from the document, e.g., "The Independent Auditor's Report is signed by Deloitte & Touche LLP, a certified third-party firm."].
-
-**Condition 3: Related-Party Disclosures**
-[PASS/FAIL] - [Brief explanation and proof from the document, e.g., "The Notes to Financial Statements disclose a $75,000 related-party transaction, which is over the $50,000 threshold."].
-
-**3. Final Conclusion:**
-[ACCEPT/REJECT] - [Brief summary of the overall findings].
-""".formatted(project.getName(), project.getDescription(), allDocumentsContent);
-
-
-        String response = generateTextFromTextInput.askGemini(prompt2);
-       /* String response = aiService.chat(prompt);
-           return response;
-
-       }*/
+**Instructions:**
+- Only evaluate conditions relevant to the applicant's type:
+  - Salaryman: Conditions 1, 2, 5, 8, 9
+  - Retired: Conditions 1, 3, 6, 8, 9
+  - Professional/Self-employed: Conditions 1, 4, 7, 8, 9
+- Skip all conditions that are not applicable.
+- Output each applicable condition in the exact one-line format provided in the JSON output_format.
+- Include only the proof necessary to justify PASS or FAIL.
+- Provide a brief Final Conclusion.
+- Use the current date for any duration calculations.
+""".formatted(
+                produit.getConditions(),
+                project.getName(),
+                project.getDescription(),
+                project.getClientType(),
+                project.getIndividualType() != null ? project.getIndividualType() : "",
+                today,
+                allDocumentsContent
+        );
+        String response = GeminiAiService.askGemini(prompt2);
         return response;
     }
+
+*/
 }
 
 

@@ -2,6 +2,8 @@ package com.example.kafgenerator.Services;
 
 import com.example.kafgenerator.DTO.ProjectDTO;
 import com.example.kafgenerator.Entities.Project;
+
+import java.io.IOException;
 import java.util.List;
 
 public interface IProjectService {
@@ -19,7 +21,9 @@ public interface IProjectService {
 
     //String generateReport(Project project);
 
-    String generateReport(Long id);
+     //String generateReport(Long id, Long idprod);
+
+String generateReport(Long id, Long idprod) throws IOException, InterruptedException;
 
     //String generateReport(String prompt);
 }

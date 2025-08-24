@@ -1,7 +1,12 @@
 package com.example.kafgenerator.DTO;
 
+import com.example.kafgenerator.Entities.ClientType;
 import com.example.kafgenerator.Entities.Document;
+import com.example.kafgenerator.Entities.IndividualType;
 import com.example.kafgenerator.Entities.User;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +17,25 @@ public class ProjectDTO {
     private String description;
     private String createdAt;
     public User user;
-
+    private ClientType clientType;
+    private IndividualType individualType;
     private List<com.example.kafgenerator.Entities.Document> documents= new ArrayList<>();
+
+    public ClientType getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(ClientType clientType) {
+        this.clientType = clientType;
+    }
+
+    public IndividualType getIndividualType() {
+        return individualType;
+    }
+
+    public void setIndividualType(IndividualType individualType) {
+        this.individualType = individualType;
+    }
 
     public List<Document> getDocuments() {
         return documents;

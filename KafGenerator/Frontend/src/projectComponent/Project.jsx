@@ -5,13 +5,12 @@ import {
   addDocument, 
   deleteDocument, 
   getDocumentsByProjectId,
-  deleteProject 
+  deleteProject ,
+  generateReport,
+  getAllProduits
 } from '../api/api';
 import './Project.css';
 
-// It is generally not good practice to use window.confirm() or alert()
-// in a React application. You may want to replace these with a custom
-// modal or confirmation dialog component for a better user experience.
 
 export default function Project() {
   const { id } = useParams();
@@ -23,6 +22,24 @@ export default function Project() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [docType, setDocType] = useState('');
   const [documentName, setDocumentName] = useState('');
+  const [produits, setProduits] = useState([]);
+  const [selectedProduit, setSelectedProduit] = useState("");
+  const [reportResult, setReportResult] = useState(null); // NEW
+
+  const handleGenerateReport = async () => {
+    if (!selectedProduit) {
+      alert("Please select a produit first!");
+      return;
+    }
+
+    try {
+      const result = await generateReport(id, selectedProduit);
+      setReportResult(result); // instead of alert
+    } catch (err) {
+      console.error(err);
+      setReportResult("❌ Error generating report: " + err.message);
+    }
+  };
 
   useEffect(() => {
     const loadProject = async () => {
@@ -48,6 +65,20 @@ export default function Project() {
   };
 
   useEffect(() => {
+    const fetchProduits = async () => {
+      try {
+        const data = await getAllProduits();
+        setProduits(data);
+      } catch (err) {
+        console.error(err);
+        alert("Error fetching produits: " + err.message);
+      }
+    };
+
+    fetchProduits();
+  }, []);
+
+  useEffect(() => {
     fetchDocuments();
   }, [id]);
 
@@ -57,7 +88,6 @@ export default function Project() {
       setSelectedFile(file);
       setDocumentName(file.name || '');
 
-      // Determine the document type based on the file's MIME type
       switch (file.type) {
         case 'application/pdf':
           setDocType('pdf');
@@ -68,14 +98,11 @@ export default function Project() {
         case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
           setDocType('excel');
           break;
-        case 'image/jpeg': // Note: your backend logic specified 'image/jpg' but 'image/jpeg' is more common
-        case 'image/jpg':
-          setDocType('excel'); // The backend is expecting 'excel' for images, as per your code
-          break;
+        
         default:
           setDocType('');
           alert('Unsupported file type. Please select a PDF, DOCX, XLSX, or JPG file.');
-          setSelectedFile(null); // Clear selected file if type is unsupported
+          setSelectedFile(null); 
       }
     }
   };
@@ -125,6 +152,14 @@ export default function Project() {
         <p className="project-description">
           Description: <strong>{project.description}</strong>
         </p>
+        <p className="project-meta">
+          Client Type: <strong>{project.clientType}</strong>
+        </p>
+        {project.clientType === 'Individual' && (
+          <p className="project-meta">
+            Individual Type: <strong>{project.individualType}</strong>
+          </p>
+        )}
       </header>
 
       <section className="project-documents">
@@ -155,10 +190,33 @@ export default function Project() {
       </section>
 
       <section className="Caf-section">
-        <h2>Decision Document</h2>
-        <p>No decision document has been generated for this project yet.</p>
-        <button className="generate-Caf-button">Start Analysis & Generate report</button>
-      </section>
+  <h2>Decision Document</h2>
+  <p>Select a produit and generate a decision report for this project.</p>
+
+  <select
+    className="produit-dropdown"
+    value={selectedProduit}
+    onChange={(e) => setSelectedProduit(e.target.value)}
+  >
+    <option value="" disabled>Select a produit</option>
+    {produits.map((p) => (
+      <option key={p.id} value={p.id}>
+        {p.name}
+      </option>
+    ))}
+  </select>
+
+  <button className="generate-Caf-button" onClick={handleGenerateReport}>
+    Start Analysis & Generate report
+  </button>
+
+  {reportResult && (
+    <div className="report-container">
+      <pre className="report-content">{reportResult}</pre>
+    </div>
+  )}
+</section>
+
 
       <footer className="project-footer">
         <div className="button-group">

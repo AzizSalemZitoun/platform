@@ -159,3 +159,18 @@ text-align: center;
   outline: none;
   cursor: pointer;
 }
+.individualType,
+.clientType{
+margin-left: 20px;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: rgb(0, 154, 191);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;           
+  min-width: 150px;      
+  display: inline-block;}
