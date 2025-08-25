@@ -60,7 +60,7 @@ def main():
 You are an expert compliance analyst. Provide a concise report without final decision.
 Acceptance Conditions (JSON):
 {json.dumps(data['conditions'], separators=(',', ':'))}
-Client: {data['client_name']}, Project: {data['client_name']}
+Project: {data['project_name']}
 Document: {data['documents']}
 Report:
 """
