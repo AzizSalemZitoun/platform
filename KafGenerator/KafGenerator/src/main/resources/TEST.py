@@ -60,19 +60,19 @@ def main():
     data = json.loads(raw_input)
 
     summary_prompt = f"Summarize the following text concisely:\n\n{data['documents']}\n\nSummary:"
-    print("\n>>> Running summarization...\n", file=sys.stderr)
+   
     summary = generate_with_model(summary_prompt, MAX_NEW_TOKENS)
 
     report_prompt = f"""
 You are an expert compliance analyst. Provide a concise report without final decision.
 Acceptance Conditions (JSON):
 {json.dumps(data['conditions'], separators=(',', ':'))}
-Client: {data['client_name']}, Project: {data['client_name']}
+Project: {data['client_name']}
 Document: {data['documents']}
 Client Summary: {summary}
 Report:
 """
-    print("\n>>> Running report generation...\n", file=sys.stderr)
+    
     report = generate_with_model(report_prompt, MAX_NEW_TOKENS)
 
     result = {
