@@ -8,7 +8,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 warnings.filterwarnings("ignore")
 os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 
-HF_TOKEN = "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"
+HF_TOKEN = "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"
 
 MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507"
 MAX_NEW_TOKENS = 256
