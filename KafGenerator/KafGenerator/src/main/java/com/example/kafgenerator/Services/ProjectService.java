@@ -124,21 +124,20 @@ public class ProjectService implements IProjectService {
 
         // Load Python script from same folder
         ClassLoader classLoader = getClass().getClassLoader();
-        File scriptFile = new File(classLoader.getResource("TEST.py").getFile());
+        File scriptFile = new File(classLoader.getResource("2B.py").getFile());
+      //  File scriptFile = new File(classLoader.getResource("TEST.py").getFile());
 
         ProcessBuilder pb = new ProcessBuilder("py", "-3.12", scriptFile.getAbsolutePath());
 
-        pb.redirectErrorStream(true); // merge stderr into stdout
+        pb.redirectErrorStream(true); 
         Process process = pb.start();
 
-        // Write JSON input and close to signal EOF
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
             writer.write(jsonInput);
             writer.flush();
             writer.close(); // important to avoid Python hanging on stdin.read()
         }
 
-        // Read Python output
         StringBuilder output = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
