@@ -8,7 +8,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 warnings.filterwarnings("ignore")
 os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 
-HF_TOKEN = "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"
+HF_TOKEN = "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"
 
 MODEL_NAME = "google/gemma-2-2b-it"
 MAX_NEW_TOKENS = 128
